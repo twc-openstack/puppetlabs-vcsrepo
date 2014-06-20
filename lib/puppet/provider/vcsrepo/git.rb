@@ -337,8 +337,10 @@ Puppet::Type.type(:vcsrepo).provide(:git, :parent => Puppet::Provider::Vcsrepo) 
         return ret
       end
     elsif @resource.value(:user) and @resource.value(:user) != Facter['id'].value
+      ENV['GIT_SSL_NO_VERIFY']=1
       su(@resource.value(:user), '-c', "git #{args.join(' ')}" )
     else
+      ENV['GIT_SSL_NO_VERIFY']=1
       git(*args)
     end
   end
